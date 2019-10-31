@@ -1,3 +1,63 @@
 ﻿@page "/createJoke"
+@using IsaacDemo.Pages.ViewModels
 
 <h3>Create joke</h3>
+
+<EditForm Model="@vm" OnValidSubmit="@SubmitForm">
+    <div class="container">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    </div>
+
+    <div class="container-fluid">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Your awesome joke: </span>
+            </div>
+
+            <InputTextArea class="form-control" id="name" @bind-Value="@vm.JokeContent" />
+        </div>
+
+    </div>
+
+    <div class="container-fluid row m-2">
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+        <button class="btn btn-dark" @onclick="ResetContent">Reset</button>
+    </div>
+</EditForm>
+
+@code
+{
+    private CreateJokeViewModel vm = new CreateJokeViewModel();
+
+    private void SubmitForm()
+    {
+        Console.WriteLine("Form valid, perform submit");
+
+        if (MyLocalJokeDb.JokeList == null)
+        {
+            MyLocalJokeDb.JokeList = new Dictionary<int, GoodJokeViewModel>();
+        }
+
+        int newId = MyLocalJokeDb.JokeList.Count > 0 ? MyLocalJokeDb.JokeList.Keys.Last() + 1 : 1;
+
+        if (!MyLocalJokeDb.JokeList.ContainsKey(newId))
+        {
+            MyLocalJokeDb.JokeList.Add(newId, new GoodJokeViewModel
+            {
+                Id = newId,
+                Category = "My awesome jokes",
+                Type = "single",
+                Joke = vm.JokeContent
+            });
+
+            Console.WriteLine($"Successful added {newId}");
+        }
+    }
+
+    private void ResetContent()
+    {
+        vm.JokeContent = string.Empty;
+    }
+}

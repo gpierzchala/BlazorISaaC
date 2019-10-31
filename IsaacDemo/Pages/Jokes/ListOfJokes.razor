@@ -1,7 +1,46 @@
 ﻿@page "/jokes"
+@using IsaacDemo.Pages.ViewModels
 
 <h3>Joke List</h3>
 
-@code {
+@if (myJokes == null)
+{
+    <p>Loading your awesome joke database...</p>
+} else if (myJokes.Count == 0)
+{
+    <p>Your joke database is empty</p>
+}
+else
+{
+    <h1>Your joke count: @myJokes.Count</h1>
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category</th>
+                <th scope="col">Type</th>
+                <th scope="col">Joke</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (GoodJokeViewModel joke in myJokes)
+            {
+                <tr>
+                    <th scope="row">@joke.Id</th>
+                    <td>@joke.Category</td>
+                    <td>@joke.Type</td>
+                    <td>@(joke.Type == "single" ? joke.Joke : $"A --> {joke.Setup} B --> {joke.Delivery}")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
+@code {
+    public List<GoodJokeViewModel> myJokes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        myJokes = MyLocalJokeDb.JokeList.Select(x => x.Value).OrderBy(x => x.Id).ToList();
+    }
 }

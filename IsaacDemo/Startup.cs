@@ -1,8 +1,10 @@
-using Microsoft.AspNetCore.Components.Builder;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace IsaacDemo
 {
+    using System.Collections.Generic;
+    using IsaacDemo.Pages.ViewModels;
+    using Microsoft.AspNetCore.Components.Builder;
+    using Microsoft.Extensions.DependencyInjection;
+
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
@@ -12,6 +14,8 @@ namespace IsaacDemo
         public void Configure(IComponentsApplicationBuilder app)
         {
             app.AddComponent<App>("app");
+
+            MyLocalJokeDb.JokeList = new Dictionary<int, GoodJokeViewModel>();
         }
     }
 }

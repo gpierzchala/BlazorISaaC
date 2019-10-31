@@ -1,40 +1,94 @@
 ﻿@page "/getJoke"
+@using System.Threading
 @using IsaacDemo.Pages.ViewModels
 
 @inject HttpClient Http
 
 <div class="container-fluid">
 
-    @if (vm == null)
+    @if (_vm == null)
     {
         <p>Loading....</p>
     }
     else
     {
-        if (vm.Type == "single")
+        <h1>Your current Joke database contains: @_jokeCount jokes</h1>
+
+        <hr />
+
+        if (_vm.Type == "single")
         {
-            <p>@vm.Joke</p>
+            <p>@_vm.Joke</p>
         }
         else
         {
-            <p class="row">@vm.Setup</p>
-            <p class="row">@vm.Delivery</p>
+            <p class="row">Person A: @_vm.Setup</p>
+            <p class="row">Person B: @_vm.Delivery</p>
         }
     }
 
+    <div class="container-fluid">
+        <div class="container">
+            <button class="btn btn-dark" @onclick="GetAnotherJoke">Get another joke</button>
+            <button class="btn btn-warning" @onclick="SaveJoke">Save this joke</button>
+
+            <NavLink href="@("jokes")">
+                <button type="button" class="btn btn-warning">Check your jokes</button>
+            </NavLink>
+        </div>
+
+        <p class="text-success" style="display: @_display">Joke saved!</p>
+
+        <p class="text-danger" style="display: @_display_danger">You have this joke in your DB</p>
+    </div>
 </div>
 
-
-<h3>Joke</h3>
-
 @code {
-    [Parameter]
-    public int Id { get; set; }
+    private int _jokeCount = MyLocalJokeDb.JokeList.Count;
 
-    public GoodJokeViewModel vm;
+    private string _display = "none";
+    private string _display_danger = "none";
+
+    private GoodJokeViewModel _vm;
 
     protected override async Task OnInitializedAsync()
     {
-        vm = await Http.GetJsonAsync<GoodJokeViewModel>("https://sv443.net/jokeapi/category/Programming");
+        await GetGoodJoke();
+    }
+
+    async Task GetAnotherJoke()
+    {
+        await GetGoodJoke();
+    }
+
+    private async Task GetGoodJoke()
+    {
+        _display = "none";
+        _display_danger = "none";
+        _vm = await Http.GetJsonAsync<GoodJokeViewModel>("https://sv443.net/jokeapi/category/Programming");
+    }
+
+    void SaveJoke()
+    {
+        _display = "none";
+
+        Console.WriteLine("Save joke in progress");
+
+        if (!MyLocalJokeDb.JokeList.ContainsKey(_vm.Id))
+        {
+            MyLocalJokeDb.JokeList.Add(_vm.Id, _vm);
+
+            Console.WriteLine("Joke saved");
+            _display = "block";
+            _display_danger = "none";
+
+            _jokeCount = MyLocalJokeDb.JokeList.Count;
+        }
+        else
+        {
+            Console.WriteLine($"Joke with id {_vm.Id} already in dictionary");
+            _display = "none";
+            _display_danger = "block";
+        }
     }
 }
