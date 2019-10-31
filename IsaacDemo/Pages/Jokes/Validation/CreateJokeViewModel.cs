@@ -1,6 +1,7 @@
-﻿namespace IsaacDemo.Pages.ViewModels
+﻿namespace IsaacDemo.Pages.Jokes.Validation
 {
     using System.ComponentModel.DataAnnotations;
+
     public class CreateJokeViewModel
     {
         [Required]

@@ -1,4 +1,4 @@
-﻿namespace IsaacDemo.Pages.ViewModels
+﻿namespace IsaacDemo.Shared.ViewModels
 {
     public class GoodJokeViewModel
     {

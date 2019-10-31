@@ -1,7 +1,8 @@
-﻿namespace IsaacDemo
+﻿namespace IsaacDemo.Shared
 {
+    using IsaacDemo.Shared.ViewModels;
+
     using System.Collections.Generic;
-    using IsaacDemo.Pages.ViewModels;
 
     public static class MyLocalJokeDb
     {

@@ -1,7 +1,8 @@
 namespace IsaacDemo
 {
+    using IsaacDemo.Shared;
+    using IsaacDemo.Shared.ViewModels;
     using System.Collections.Generic;
-    using IsaacDemo.Pages.ViewModels;
     using Microsoft.AspNetCore.Components.Builder;
     using Microsoft.Extensions.DependencyInjection;
 

@@ -1,5 +1,4 @@
 ﻿@page "/jokes"
-@using IsaacDemo.Pages.ViewModels
 
 <h3>Joke List</h3>
 
@@ -37,6 +36,8 @@ else
                         <NavLink href="@($"jokeDetails/{joke.Id}")">
                             <button type="button" class="btn btn-block btn-outline-primary">Details</button>
                         </NavLink>
+
+                        <br/>
 
                         <button class="btn btn-block btn-outline-danger" @onclick="(() => RemoveJoke(joke.Id))">Remove</button>
                     </td>
