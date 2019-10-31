@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IsaacComponents\MyCustomComponents\MyCustomComponents.csproj" />
     <ProjectReference Include="..\IsaacShared\Shared\Shared.csproj" />
   </ItemGroup>
 
