@@ -1,3 +1,47 @@
 ﻿@page "/jokeDetails/{Id:int}"
+@using IsaacDemo.Pages.ViewModels
 
-<h3>Create joke</h3>
+<div class="container-fluid">
+    <h3>Your joke details</h3>
+
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category</th>
+                <th scope="col">Type</th>
+                <th scope="col">Joke</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@vm.Id</td>
+                <td>@vm.Category</td>
+                <td>@vm.Type</td>
+                <td>@(vm.Type == "single" ? vm.Joke : vm.Setup + " " + vm.Delivery)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <NavLink href="@($"updateJoke/{vm.Id}")">
+        <button type="button" class="btn btn-outline-primary">Update</button>
+    </NavLink>
+
+</div>
+
+
+
+@code
+{
+
+    [Parameter]
+    public int Id { get; set; }
+
+    public GoodJokeViewModel vm = new GoodJokeViewModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        vm = MyLocalJokeDb.JokeList[Id];
+    }
+
+}

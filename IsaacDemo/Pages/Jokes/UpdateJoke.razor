@@ -1,3 +1,56 @@
-﻿@page "/updateJoke"
+﻿@page "/updateJoke/{Id:int}"
+@using IsaacDemo.Pages.ViewModels
+
+@inject NavigationManager NavigationManager
 
 <h3>Update joke</h3>
+
+<EditForm Model="@vm" OnValidSubmit="@SubmitForm">
+    <div class="container">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    </div>
+
+    <div class="container-fluid">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Your awesome joke: </span>
+            </div>
+
+            <InputTextArea class="form-control" id="name" @bind-Value="@vm.JokeContent" />
+        </div>
+
+    </div>
+
+    <div class="container-fluid row m-2">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</EditForm>
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    public CreateJokeViewModel vm = new CreateJokeViewModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var goodJoke = MyLocalJokeDb.JokeList[Id];
+
+        vm = new CreateJokeViewModel
+        {
+            JokeContent = goodJoke.Joke
+        };
+    }
+
+    private void SubmitForm()
+    {
+
+        var myUpdatedJoke = MyLocalJokeDb.JokeList[Id];
+        myUpdatedJoke.Joke = vm.JokeContent;
+        MyLocalJokeDb.JokeList[Id] = myUpdatedJoke;
+
+        NavigationManager.NavigateTo($"jokeDetails/{Id}");
+    }
+}
