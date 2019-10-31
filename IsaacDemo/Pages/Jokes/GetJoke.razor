@@ -1,0 +1,40 @@
+﻿@page "/getJoke"
+@using IsaacDemo.Pages.ViewModels
+
+@inject HttpClient Http
+
+<div class="container-fluid">
+
+    @if (vm == null)
+    {
+        <p>Loading....</p>
+    }
+    else
+    {
+        if (vm.Type == "single")
+        {
+            <p>@vm.Joke</p>
+        }
+        else
+        {
+            <p class="row">@vm.Setup</p>
+            <p class="row">@vm.Delivery</p>
+        }
+    }
+
+</div>
+
+
+<h3>Joke</h3>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public GoodJokeViewModel vm;
+
+    protected override async Task OnInitializedAsync()
+    {
+        vm = await Http.GetJsonAsync<GoodJokeViewModel>("https://sv443.net/jokeapi/category/Programming");
+    }
+}
