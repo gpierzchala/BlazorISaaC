@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsaacDemo", "IsaacDemo.csproj", "{69DD5274-A26A-4DA9-94EC-D6D7CDDD76F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "..\IsaacShared\Shared\Shared.csproj", "{BC75FC01-5988-4C0B-83B3-D95AFBC67648}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "..\IsaacShared\Shared\Shared.csproj", "{BC75FC01-5988-4C0B-83B3-D95AFBC67648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCustomComponents", "..\IsaacComponents\MyCustomComponents\MyCustomComponents.csproj", "{96CF26A8-6518-4F00-8F3F-2591C1099358}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCustomComponents", "..\IsaacComponents\MyCustomComponents\MyCustomComponents.csproj", "{96CF26A8-6518-4F00-8F3F-2591C1099358}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

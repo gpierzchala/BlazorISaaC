@@ -26,9 +26,19 @@
     </div>
 </EditForm>
 
+<h2>Review your current jokes: </h2>
+<MyCustomComponents.CustomListComponent MyJokes="MyJokes" ShowActionButtons="false" />
+
 @code
 {
     private CreateJokeViewModel vm = new CreateJokeViewModel();
+
+    private List<GoodJokeViewModel> MyJokes { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        MyJokes = GetJokes();
+    }
 
     private void SubmitForm()
     {
@@ -52,11 +62,18 @@
             });
 
             Console.WriteLine($"Successful added {newId}");
+
+            MyJokes = GetJokes();
         }
     }
 
     private void ResetContent()
     {
         vm.JokeContent = string.Empty;
+    }
+
+    private List<GoodJokeViewModel> GetJokes()
+    {
+        return MyLocalJokeDb.JokeList.Select(x => x.Value).OrderBy(x => x.Id).ToList();
     }
 }

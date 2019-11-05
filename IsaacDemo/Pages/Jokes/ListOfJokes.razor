@@ -12,7 +12,10 @@ else if (MyJokes.Count == 0)
 }
 else
 {
-    <h1>Your joke count: @_jokeCount</h1>
+
+    <MyCustomComponents.CustomListComponent MyJokes="MyJokes" RemoveOnClick="RemoveJoke" ShowActionButtons="true"/>
+
+    @*<h1>Your joke count: @_jokeCount</h1>
     <table class="table table-striped table-dark">
         <thead>
             <tr>
@@ -44,7 +47,7 @@ else
                 </tr>
             }
         </tbody>
-    </table>
+    </table>*@
 }
 
 @code {

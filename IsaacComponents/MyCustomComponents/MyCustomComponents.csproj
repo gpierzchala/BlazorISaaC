@@ -11,4 +11,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.0-preview1.19508.20" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\IsaacShared\Shared\Shared.csproj" />
+  </ItemGroup>
+
 </Project>

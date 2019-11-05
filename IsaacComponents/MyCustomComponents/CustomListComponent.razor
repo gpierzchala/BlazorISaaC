@@ -1,0 +1,54 @@
+﻿<h1>Hey there, it's your component from @nameof(MyCustomComponents). Your joke count: @_jokeCount</h1>
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category</th>
+            <th scope="col">Type</th>
+            <th scope="col">Joke</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (GoodJokeViewModel joke in MyJokes)
+        {
+            <tr>
+                <th scope="row">@joke.Id</th>
+                <td scope="row">@joke.Category</td>
+                <td scope="row">@joke.Type</td>
+                <td scope="row">@(joke.Type == "single" ? joke.Joke : $"A --> {joke.Setup} B --> {joke.Delivery}")</td>
+                <td scope="row">
+
+                    @if (ShowActionButtons)
+                    {
+                        <NavLink href="@($"jokeDetails/{joke.Id}")">
+                            <button type="button" class="btn btn-block btn-outline-primary">Details</button>
+                        </NavLink>
+
+                        <br />
+
+                        <button class="btn btn-block btn-outline-danger" @onclick="(() => RemoveOnClick.InvokeAsync(joke.Id))">Remove</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<GoodJokeViewModel> MyJokes { get; set; }
+
+    [Parameter]
+    public EventCallback<int> RemoveOnClick { get; set; }
+
+    [Parameter]
+    public bool ShowActionButtons { get; set; }
+
+    private int _jokeCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _jokeCount = MyJokes.Count;
+    }
+}
